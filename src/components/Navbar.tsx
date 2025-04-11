@@ -44,7 +44,7 @@ const NavBar: React.FC = () => {
               href="/profiles"
               key="profiles"
             >
-              Profiles
+              Your Profile
             </Nav.Link>
             <Nav.Link
               id={ComponentIDs.projectsMenuItem}
@@ -52,7 +52,7 @@ const NavBar: React.FC = () => {
               href="/projects"
               key="projects"
             >
-              Projects
+              Clubs
             </Nav.Link>
             <Nav.Link
               id={ComponentIDs.interestsMenuItem}
@@ -60,7 +60,7 @@ const NavBar: React.FC = () => {
               href="/interests"
               key="interests"
             >
-              Interests
+              Search
             </Nav.Link>
             {currentUser
               ? [
