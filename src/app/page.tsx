@@ -22,7 +22,7 @@ export default function Home() {
           <Container>
             <Row className="g-4" xs={1} md={2} lg={3}>
               <Col>
-                <Card className="h-100 text-center shadow-sm">
+                <Card className="h-100 text-center shadow-sm card-light-gray">
                   <Card.Img variant="top" src="/images/home-page.png" />
                   <Card.Body>
                     <Card.Title>Start by logging in</Card.Title>
@@ -33,7 +33,7 @@ export default function Home() {
                 </Card>
               </Col>
               <Col>
-                <Card className="h-100 text-center shadow-sm">
+                <Card className="h-100 text-center shadow-sm card-light-gray">
                   <Card.Img variant="top" src="/images/add-project-page.png" />
                   <Card.Body>
                     <Card.Title>Find a club!</Card.Title>
@@ -44,7 +44,7 @@ export default function Home() {
                 </Card>
               </Col>
               <Col>
-                <Card className="h-100 text-center shadow-sm">
+                <Card className="h-100 text-center shadow-sm card-light-gray">
                   <Card.Img variant="top" src="/images/filter-page.png" />
                   <Card.Body>
                     <Card.Title>Join new groups! Make new friends!</Card.Title>
@@ -57,10 +57,11 @@ export default function Home() {
             </Row>
           </Container>
         </div>
-        <div>
+        <div className="landing-green-background">
           <Container className="text-center">
-            <h1 className="underlined-text" style={{ paddingBottom: '20px', color: 'black' }}>
-              For club leaders:
+            <h1 style={{ paddingTop: '20px', paddingBottom: '30px', color: 'white', fontSize: '36pt' }}>
+              For club owners...
+
             </h1>
           </Container>
         </div>
@@ -68,34 +69,35 @@ export default function Home() {
           <Container>
             <Row className="g-4" xs={1} md={2} lg={3}>
               <Col>
-                <Card className="h-100 text-center shadow-sm">
+                <Card className="h-100 text-center shadow-sm card-light-gray">
                   <Card.Img variant="top" src="/images/home-page.png" />
                   <Card.Body>
                     <Card.Title>Start by logging in</Card.Title>
                     <Card.Text>
-                      Create your account and begin exploring clubs.
+                      Log in through using your club ID number.
                     </Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
               <Col>
-                <Card className="h-100 text-center shadow-sm">
+                <Card className="h-100 text-center shadow-sm card-light-gray">
                   <Card.Img variant="top" src="/images/add-project-page.png" />
                   <Card.Body>
-                    <Card.Title>Find a club!</Card.Title>
+                    <Card.Title>Edit your page!</Card.Title>
                     <Card.Text>
-                      Browse existing clubs! Find what interests you!
+                      Edit your club page to show others what your club is all about!
                     </Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
               <Col>
-                <Card className="h-100 text-center shadow-sm">
+                <Card className="h-100 text-center shadow-sm card-light-gray">
                   <Card.Img variant="top" src="/images/filter-page.png" />
                   <Card.Body>
-                    <Card.Title>Join new groups! Make new friends!</Card.Title>
+                    <Card.Title>Publish your changes!</Card.Title>
                     <Card.Text>
-                      Sign up and join clubs by looking at their contact info on the bottom of their pages!
+                      Publish your changes via the &quot;publish&quot; button on the bottom of the page!
+                      Don&apos;t forget to include contact information!
                     </Card.Text>
                   </Card.Body>
                 </Card>
