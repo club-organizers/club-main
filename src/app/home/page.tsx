@@ -4,11 +4,10 @@ import { getServerSession } from 'next-auth';
 import { Profile, Interest, Project } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { loggedInProtectedPage } from '@/lib/page-protection';
-import { authOptions } from '../api/auth/[...nextauth]/route';
 import HomePage from './HomePage';
 
 const HomePageHelper = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   // console.log(session);
   loggedInProtectedPage(
     session as {
