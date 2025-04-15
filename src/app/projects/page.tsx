@@ -5,6 +5,8 @@ import { PageIDs } from '@/utilities/ids';
 import pageStyle from '@/utilities/pageStyle';
 import ProjectCardHelper from './ProjectCardHelper';
 
+export const dynamic = 'force-dynamic';
+
 const ProjectsPage = async () => {
   const projects = await prisma.project.findMany();
   projects.sort((a, b) => a.name.localeCompare(b.name));
