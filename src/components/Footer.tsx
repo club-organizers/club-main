@@ -11,8 +11,8 @@ const Footer = () => (
         <br />
         Honolulu, HI 96822
         <br />
-        <a style={{ color: 'white' }} href="https://bowfolios.github.io">
-          https://bowfolios.github.io
+        <a style={{ color: 'white' }} href="https://club-organizers.github.io">
+          https://club-organizers.github.io
         </a>
       </Col>
     </Container>

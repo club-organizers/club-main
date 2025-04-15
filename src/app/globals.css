@@ -1,5 +1,5 @@
 /* Use Open Sans as the default sans serif font. */
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700|Source+Code+Pro:300,400,500,700");
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;700&display=swap');
 
 /* Create some Bowfolio CSS variables. */
 :root {
@@ -8,6 +8,7 @@
   --bowfolio-navbar-text: white;
   --bowfolio-navbar-highlight-text: var(--bs-gray-500);
 }
+
 /* Change bootstrap variable values.
  See https://getbootstrap.com/docs/5.2/customize/css-variables/
  */
@@ -21,6 +22,7 @@ html, body {
   height: 100%;
   padding: 0;
   margin: 0;
+  font-family: "Times New Roman", Times, serif;  
 }
 
 .wrapper {
@@ -28,30 +30,16 @@ html, body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  font-family: "Times New Roman", Times, serif;  
 }
 
-
-/* Color the light Brand and links with dark color */
-.bg-light span, .bg-light a {
-  color:  var(--bowfolio-navbar-bg);
+.navbar,
+.navbar *,
+.custom-footer,
+.custom-footer * {
+  font-family: "Times New Roman", Times, serif !important; 
 }
 
-/* When logged in we switch the NavBar to bg-dark so we need to override the styles to give light text. */
-.bg-dark span, .bg-dark a {
-  color: var(--bowfolio-navbar-text);
-}
-
-/* When logged in we highlight the selected route. */
-.bg-dark a.nav-link.active {
-  color: var(--bowfolio-navbar-highlight-text);
-}
-
-/* Override the color on the dropdown when logged in. */
-.bg-dark a.dropdown-item {
-  color: var(--bowfolio-navbar-bg);
-}
-
-/* Landing page color blocking */
 .landing-green-background {
   background-color: var(--bowfolio-navbar-bg);
   color: var(--bowfolio-navbar-text);
@@ -73,8 +61,27 @@ html, body {
   text-decoration: underline;
 }
 
-.custom-footer {
-  background-color: #7994f7;
+.navbar,
+.navbar * {
+  color: black !important;
+  fill: black !important;
+}
+
+.navbar .dropdown-menu,
+.navbar .dropdown-item {
+  background-color: white !important;
+  color: black !important;
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+  background-color: #f1f1f1 !important;
+  color: black !important;
+}
+
+.custom-footer,
+.custom-footer * {
+  color: black !important;
 }
 
 .card-light-gray {
@@ -85,5 +92,3 @@ html, body {
 .card-light-gray:hover {
   background-color: #e0e0e0;
 }
-
-
