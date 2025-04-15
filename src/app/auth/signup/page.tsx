@@ -99,6 +99,9 @@ const SignUp = () => {
               <Card.Footer>
                 Already have an account?
                 <a href="/auth/signin">Sign in</a>
+                <Button href="/auth/loginPage" variant="primary" className="float-end">
+                  Back
+                </Button>
               </Card.Footer>
             </Card>
           </Col>

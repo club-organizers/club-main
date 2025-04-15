@@ -29,7 +29,7 @@ const SignIn = () => {
       <Container>
         <Row className="justify-content-center">
           <Col xs={5}>
-            <h1 className="text-center">Sign In</h1>
+            <h1 className="text-center">Log In</h1>
             <Card>
               <Card.Body>
                 <Form method="post" onSubmit={handleSubmit}>
@@ -49,6 +49,9 @@ const SignIn = () => {
               <Card.Footer>
                 Don&apos;t have an account?
                 <a href="/auth/signup">Sign up</a>
+                <Button href="/auth/loginPage" variant="primary" className="float-end">
+                  Back
+                </Button>
               </Card.Footer>
             </Card>
           </Col>

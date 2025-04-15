@@ -92,8 +92,13 @@ const NavBar: React.FC = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <Nav.Link id={ComponentIDs.loginPageLink} href="/loginPage">
-                Login/Signup
+              <Nav.Link
+                id={ComponentIDs.loginPageLink}
+                active={pathname === '/auth/loginPage'}
+                href="/auth/loginPage"
+                key="loginPage"
+              >
+                Login/Sign Up
               </Nav.Link>
             )}
           </Nav>
