@@ -6,7 +6,7 @@
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { Container, Image, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { BoxArrowRight, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import { BoxArrowRight } from 'react-bootstrap-icons';
 // eslint-disable-next-line import/extensions
 import { ComponentIDs } from '@/utilities/ids';
 
@@ -92,16 +92,9 @@ const NavBar: React.FC = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <NavDropdown id={ComponentIDs.loginDropdown} title="Login">
-                <NavDropdown.Item id={ComponentIDs.loginDropdownSignIn} href="/auth/signin">
-                  <PersonFill />
-                  Sign in
-                </NavDropdown.Item>
-                <NavDropdown.Item id={ComponentIDs.loginDropdownSignUp} href="/auth/signup">
-                  <PersonPlusFill />
-                  Sign up
-                </NavDropdown.Item>
-              </NavDropdown>
+              <Nav.Link id={ComponentIDs.loginPageLink} href="/loginPage">
+                Login/Signup
+              </Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>
