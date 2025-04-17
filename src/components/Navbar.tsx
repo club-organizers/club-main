@@ -94,8 +94,8 @@ const NavBar: React.FC = () => {
             ) : (
               <Nav.Link
                 id={ComponentIDs.loginPageLink}
-                active={pathname === '/auth/loginPage'}
-                href="/auth/loginPage"
+                active={pathname === '/loginPage'}
+                href="/loginPage"
                 key="loginPage"
               >
                 Login/Sign Up
