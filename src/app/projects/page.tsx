@@ -25,7 +25,13 @@ export default function Home() {
                   <Card.Body>
                     <Card.Title>Basketball Club</Card.Title>
                     <Card.Text>Basketball is really cool.</Card.Text>
-                    <Button style={{ backgroundColor: 'olive', border: 'none' }}>Learn More</Button>
+                    <Button
+                      style={{ backgroundColor: 'olive', border: 'none' }}
+                      onClick={() => window.location.href = 'https://www.espn.com/nba/player/_/id/1966/lebron-james'}
+                    >
+                      Learn More
+                    </Button>
+
                   </Card.Body>
                 </Card>
               </Col>
