@@ -15,8 +15,7 @@ const RegisterClub = () => (
               Submit a completed
               {' '}
               <a
-                href="https://manoa.hawaii.edu/studentlife/involvement/registered-
-                independent-organizations/forming-an-rio/"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSfZHcu-dtXozIQnPlc0hqe44Bji_hfXPqVkkeRNwLSe_jFOJg/viewform"
                 target="_blank"
                 rel="noopener noreferrer"
               >
