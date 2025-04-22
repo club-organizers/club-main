@@ -4,8 +4,13 @@ import { PageIDs } from '@/utilities/ids';
 import pageStyle from '@/utilities/pageStyle';
 import InterestCardHelper from './InterestCardHelper';
 
+type Interest = {
+  id: string;
+  name: string;
+};
+
 const InterestsPage = async () => {
-  const interests = await prisma.interest.findMany();
+  const interests: Interest[] = await prisma.interest.findMany();
   interests.sort((a, b) => a.name.localeCompare(b.name));
   console.log(interests);
   return (
