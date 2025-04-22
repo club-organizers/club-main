@@ -15,7 +15,8 @@ const RegisterClub = () => (
               Submit a completed
               {' '}
               <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSfZHcu-dtXozIQnPlc0hqe44Bji_hfXPqVkkeRNwLSe_jFOJg/viewform"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSfZHcu-dtXozIQnPlc0hqe44Bji_h
+                fXPqVkkeRNwLSe_jFOJg/viewform"
                 target="_blank"
                 rel="noopener noreferrer"
               >
