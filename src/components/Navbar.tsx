@@ -39,12 +39,20 @@ const NavBar: React.FC = () => {
               ''
             )}
             <Nav.Link
+              id={ComponentIDs.information}
+              active={pathname === '/information'}
+              href="/information"
+              key="information"
+            >
+              Information
+            </Nav.Link>
+            <Nav.Link
               id={ComponentIDs.profilesMenuItem}
               active={pathname === '/profiles'}
               href="/profiles"
               key="profiles"
             >
-              Profiles
+              Recommended Clubs
             </Nav.Link>
             <Nav.Link
               id={ComponentIDs.projectsMenuItem}
@@ -52,7 +60,7 @@ const NavBar: React.FC = () => {
               href="/projects"
               key="projects"
             >
-              Projects
+              Clubs
             </Nav.Link>
             <Nav.Link
               id={ComponentIDs.interestsMenuItem}
@@ -60,7 +68,7 @@ const NavBar: React.FC = () => {
               href="/interests"
               key="interests"
             >
-              Interests
+              Search
             </Nav.Link>
             {currentUser
               ? [

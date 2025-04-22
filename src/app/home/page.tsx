@@ -8,7 +8,7 @@ import authOptions from '@/app/auth/authOptions/authOptions';
 import HomePage from './HomePage';
 
 const HomePageHelper = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   // console.log(session);
   loggedInProtectedPage(
     session as {

@@ -7,7 +7,7 @@ import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/app/auth/authOptions/authOptions';
 
 const AddProjectPage = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
   loggedInProtectedPage(
     session as {
       user: { email: string; id: string; randomKey: string };
