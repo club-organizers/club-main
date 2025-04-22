@@ -23,6 +23,6 @@
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/**/*",
     "supabaseClient.js", "src/**/*",
-    "testSupabase.js"],
+    "testSupabase.js", "src/components/ClubCard.js"],
   "exclude": ["node_modules"]
 }

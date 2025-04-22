@@ -30,6 +30,7 @@ const ProjectPage = () => {
     fetchClubs();
   }, []);
 
+  // const pathname = usePathname();
   return (
     <main>
       <Container style={{ marginTop: '20px' }}>
