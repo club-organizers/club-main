@@ -21,7 +21,7 @@ const ProjectPage = () => {
         setClubs(null);
         console.log(error);
       }
-      if (data) { // Check if data is not null
+      if (data) {
         setClubs(data);
         setFetchError(null);
       }
