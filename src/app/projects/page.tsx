@@ -8,7 +8,7 @@ const ProjectPage = () => {
   console.log(supabase);
 
   const [fetchError, setFetchError] = useState<string | null>(null);
-  const [clubs, setClubs] = useState(null);
+  const [clubs, setClubs] = useState<{ name: string }[] | null>(null);
 
   useEffect(() => {
     const fetchClubs = async () => {
@@ -40,8 +40,8 @@ const ProjectPage = () => {
               {fetchError && (<p>{fetchError}</p>)}
               {clubs && (
                 <div className="clubs">
-                  {clubs.map(clubs => (
-                    <p>{clubs.name}</p>
+                  {clubs.map(club => (
+                    <p>{club.name}</p>
                   ))}
                 </div>
               )}
