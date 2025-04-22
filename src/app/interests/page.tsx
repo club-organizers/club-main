@@ -5,7 +5,7 @@ import pageStyle from '@/utilities/pageStyle';
 import InterestCardHelper from './InterestCardHelper';
 
 type Interest = {
-  id: string;
+  id: number;
   name: string;
 };
 
