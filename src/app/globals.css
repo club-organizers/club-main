@@ -93,3 +93,10 @@ html, body {
   background-color: #e0e0e0;
 }
 
+.card-hover {
+  transition: background-color 0.3s ease;
+}
+
+.card-hover:hover {
+  background-color: #f0f0f0; 
+}
