@@ -52,7 +52,7 @@ const NavBar: React.FC = () => {
               href="/profiles"
               key="profiles"
             >
-              Your Profile
+              Recommended Clubs
             </Nav.Link>
             <Nav.Link
               id={ComponentIDs.projectsMenuItem}
