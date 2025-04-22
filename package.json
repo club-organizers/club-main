@@ -7,7 +7,8 @@
     "dev-https": "next dev --experimental-https",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint . && next lint",
+    "test": "playwright test",
     "playwright-development": "npx playwright test",
     "playwright-ci": "next dev && npx playwright test"
   },
@@ -35,12 +36,12 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.45.1",
+    "@playwright/test": "^1.52.0",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^22.5.4",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
+    "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "eslint-config-next": "14.2.10",
@@ -48,6 +49,7 @@
     "prettier": "^3.3.1",
     "prettier-eslint": "^16.3.0",
     "prisma": "^5.19.1",
+    "start-server-and-test": "^2.0.11",
     "typescript": "^5.4.5"
   }
 }
