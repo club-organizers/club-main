@@ -26,34 +26,39 @@ const SignIn = () => {
 
   return (
     <main>
-      <Container>
-        <Row className="justify-content-center">
-          <Col xs={5}>
-            <h1 className="text-center">Sign In</h1>
-            <Card>
-              <Card.Body>
-                <Form method="post" onSubmit={handleSubmit}>
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
-                    <input name="email" type="text" className="form-control" />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Password</Form.Label>
-                    <input name="password" type="password" className="form-control" />
-                  </Form.Group>
-                  <Button type="submit" className="mt-3">
-                    Signin
+      <div style={{ backgroundImage: 'url(/login-background.jpg)', height: '100vh', backgroundSize: 'cover' }}>
+        <Container>
+          <Row className="justify-content-center">
+            <Col xs={5}>
+              <h1 className="text-center" style={{ color: 'white' }}>Log In</h1>
+              <Card>
+                <Card.Body>
+                  <Form method="post" onSubmit={handleSubmit}>
+                    <Form.Group controlId="formBasicEmail">
+                      <Form.Label>Email</Form.Label>
+                      <input name="email" type="text" className="form-control" />
+                    </Form.Group>
+                    <Form.Group>
+                      <Form.Label>Password</Form.Label>
+                      <input name="password" type="password" className="form-control" />
+                    </Form.Group>
+                    <Button type="submit" className="mt-3">
+                      Signin
+                    </Button>
+                  </Form>
+                </Card.Body>
+                <Card.Footer>
+                  Don&apos;t have an account?
+                  <a href="/auth/signup">Sign up</a>
+                  <Button href="/auth/loginPage" variant="primary" className="float-end">
+                    Back
                   </Button>
-                </Form>
-              </Card.Body>
-              <Card.Footer>
-                Don&apos;t have an account?
-                <a href="/auth/signup">Sign up</a>
-              </Card.Footer>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+                </Card.Footer>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </div>
     </main>
   );
 };

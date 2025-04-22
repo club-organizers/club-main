@@ -4,9 +4,10 @@ import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import AddProjectForm from '@/components/AddProjectForm';
 import { loggedInProtectedPage } from '@/lib/page-protection';
+import authOptions from '@/app/auth/authOptions/authOptions';
 
 const AddProjectPage = async () => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   loggedInProtectedPage(
     session as {
       user: { email: string; id: string; randomKey: string };

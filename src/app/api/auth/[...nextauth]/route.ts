@@ -1,15 +1,6 @@
-/* eslint-disable import/prefer-default-export */
-import { getServerSession } from 'next-auth/next';
-import { NextResponse } from 'next/server';
+/* eslint-disable arrow-body-style */
+import NextAuth from 'next-auth';
+import authOptions from '@/app/auth/authOptions/authOptions';
 
-export async function GET() {
-  const session = await getServerSession();
-
-  if (!session) {
-    return new NextResponse(JSON.stringify({ error: 'unauthorized' }), {
-      status: 401,
-    });
-  }
-
-  return NextResponse.json({ authenticated: true });
-}
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
