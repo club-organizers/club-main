@@ -4,6 +4,8 @@ import { PageIDs } from '@/utilities/ids';
 import pageStyle from '@/utilities/pageStyle';
 import InterestCardHelper from './InterestCardHelper';
 
+export const dynamic = 'force-dynamic';
+
 type Interest = {
   id: number;
   name: string;
