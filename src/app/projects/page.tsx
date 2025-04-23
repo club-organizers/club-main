@@ -12,9 +12,7 @@ const ProjectPage = () => {
 
   useEffect(() => {
     const fetchClubs = async () => {
-      const { data, error } = await supabase
-        .from('clubs')
-        .select();
+      const { data, error } = await supabase.from('clubs').select();
 
       if (error) {
         setFetchError('Could not fetch the data');
@@ -38,11 +36,11 @@ const ProjectPage = () => {
           <Col xs={8}>
             <h1 className="text-center">Club Names:</h1>
             <div>
-              {fetchError && (<p>{fetchError}</p>)}
+              {fetchError && <p>{fetchError}</p>}
               {clubs && (
                 <div className="clubs">
-                  {clubs.map(club => (
-                    <p>{club.name}</p>
+                  {clubs.map((club, index) => (
+                    <p key={club.name ?? index}>{club.name}</p>
                   ))}
                 </div>
               )}
