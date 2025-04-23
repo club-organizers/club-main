@@ -2,11 +2,12 @@ import { test, expect } from '@playwright/test';
 
 test('Public pages', async ({ page }) => {
   await page.goto('http://localhost:3000/');
-  await expect(page.getByRole('link', { name: 'BowfoliosBowfolios' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Bowfolios' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Profiles' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Projects' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Interests' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Login' })).toBeVisible();
+
   await page.getByRole('heading', { name: 'Welcome to Bowfolios' }).click();
   await page.getByRole('link', { name: 'Profiles' }).click();
   await expect(page.locator('#profilesPage')).toContainText('Carleton Moore');
