@@ -1,6 +1,7 @@
 'use client';
 
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
         <p style={{ fontSize: '15pt', color: 'olive' }}>
           Discover new organizations, and find ways to get involved.
         </p>
-        <img src="/images/clubspic.png" alt="CLUBS logo" style={{ width: '350px' }} />
+        <Image src="/images/clubspic.png" alt="CLUBS logo" style={{ width: '350px' }} />
       </div>
 
       <div className="landing-white-background">
