@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/prisma';
 import { hash } from 'bcrypt';
+import { prisma } from '@/lib/prisma';
 import * as config from '../config/settings.development.json';
 
 async function main() {
