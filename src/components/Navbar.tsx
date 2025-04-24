@@ -77,6 +77,14 @@ const NavBar: React.FC = () => {
             >
               Search
             </Nav.Link>
+            <Nav.Link
+              id={ComponentIDs.AddClubPage}
+              active={pathname === '/AddClub'}
+              href="/AddClub"
+              key="AddClub"
+            >
+              Add Club
+            </Nav.Link>
             {currentUser
               ? [
                   <Nav.Link
