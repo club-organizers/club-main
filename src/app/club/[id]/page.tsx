@@ -4,7 +4,6 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Container, Card, Button } from 'react-bootstrap';
 import supabase from '../../../../supabaseClient';
-import Link from 'next/link';
 
 const ClubDetailsPage = () => {
   const { id } = useParams();
