@@ -32,7 +32,6 @@ export const ComponentIDs = {
   signUpFormPassword: 'signUpFormPassword',
   signUpFormSubmit: 'signUpFormSubmit',
   loginPageLink: 'loginPageLink',
-  AddClubPage: 'AddClubPage',
 };
 
 export const PageIDs = {

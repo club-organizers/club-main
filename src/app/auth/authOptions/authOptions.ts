@@ -1,9 +1,15 @@
 import { compare } from 'bcrypt';
 import { type NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { prisma } from '@/lib/prisma';
+import supabase from '@/../supabaseClient';
 
-const authOptions:NextAuthOptions = {
+declare module 'next-auth' {
+  interface User {
+    randomKey?: string;
+  }
+}
+
+const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
@@ -22,12 +28,15 @@ const authOptions:NextAuthOptions = {
         if (!credentials?.email || !credentials.password) {
           return null;
         }
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        });
-        if (!user) {
+
+        const { data: user, error } = await supabase
+          .from('User') 
+          .select('*')
+          .eq('email', credentials.email)
+          .single();
+
+        if (error || !user) {
+          console.error('Error fetching user:', error?.message || 'User not found');
           return null;
         }
 
@@ -35,6 +44,7 @@ const authOptions:NextAuthOptions = {
         if (!isPasswordValid) {
           return null;
         }
+
 
         return {
           id: `${user.id}`,
@@ -47,13 +57,13 @@ const authOptions:NextAuthOptions = {
   pages: {
     signIn: '/auth/signin',
     signOut: '/auth/signout',
-    //   error: '/auth/error',
-    //   verifyRequest: '/auth/verify-request',
-    //   newUser: '/auth/new-user'
+    // Uncomment and customize these if needed
+    // error: '/auth/error',
+    // verifyRequest: '/auth/verify-request',
+    // newUser: '/auth/new-user'
   },
   callbacks: {
     session: ({ session, token }) => ({
-      // console.log('Session Callback', { session, token })
       ...session,
       user: {
         ...session.user,
@@ -63,18 +73,10 @@ const authOptions:NextAuthOptions = {
     }),
     jwt: ({ token, user }) => {
       if (user) {
-        interface AppUser {
-          id: string;
-          email: string;
-          randomKey: string;
-        }
-    
-        const u = user as AppUser;
-    
         return {
           ...token,
-          id: u.id,
-          randomKey: u.randomKey,
+          id: user.id,
+          randomKey: user.randomKey,
         };
       }
       return token;
