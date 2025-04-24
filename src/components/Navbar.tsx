@@ -78,6 +78,13 @@ const NavBar: React.FC = () => {
             >
               Search
             </Nav.Link>
+            <Nav.Link
+              id={ComponentIDs.interestsMenuItem}
+              href="/add"
+            >
+              Add Club
+            </Nav.Link>
+
             {currentUser
               ? [
                   <Nav.Link
