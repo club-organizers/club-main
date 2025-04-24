@@ -4,9 +4,9 @@
 
 import React from 'react';
 import { Container, Col } from 'react-bootstrap';
+import { Profile, Interest, Project } from '@prisma/client';
 import { PageIDs } from '@/utilities/ids';
 import pageStyle from '@/utilities/pageStyle';
-import { Profile, Interest, Project } from '@prisma/client';
 import ProfileForm from '@/components/ProfileForm';
 
 const HomePage = ({

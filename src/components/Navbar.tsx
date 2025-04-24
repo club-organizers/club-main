@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-indent */
-/* eslint-disable @typescript-eslint/indent */
 
 'use client';
 
