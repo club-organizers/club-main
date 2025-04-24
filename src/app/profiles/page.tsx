@@ -1,6 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import supabase from '../../../supabaseClient';
+import Link from 'next/link';
+
 
 const ProfilesPage = () => {
   const clubTypes = [
@@ -16,7 +20,38 @@ const ProfilesPage = () => {
     'Student Affairs',
   ];
 
-  const [selectedClubType, setSelectedClubType] = React.useState<string>('');
+  function truncateText(description: string, maxLength: number): string {
+    if (description.length > maxLength) {
+      return `${description.substring(0, maxLength)}...`;
+    }
+    return description;
+  }
+
+  const [selectedClubType, setSelectedClubType] = useState<string>('');
+  const [filteredClubs, setFilteredClubs] = useState<{ id: number; name: string; description: string; type: string }[] | null>(null);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+
+  const handleFetchClubs = async () => {
+    if (!selectedClubType) {
+      setFetchError('Please select a club type.');
+      setFilteredClubs(null);
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from('clubs')
+      .select('id, name, description, type')
+      .eq('type', selectedClubType); // Fetch clubs matching the selected type
+
+    if (error) {
+      setFetchError('Could not fetch the data');
+      setFilteredClubs(null);
+      console.log(error);
+    } else {
+      setFilteredClubs(data);
+      setFetchError(null);
+    }
+  };
 
   return (
     <div style={{ padding: '20px' }}>
@@ -38,18 +73,45 @@ const ProfilesPage = () => {
             </option>
           ))}
         </select>
-        <button
-          type="button"
-          style={{
-            padding: '10px 20px',
-            backgroundColor: 'olive',
-            color: 'white',
-            border: 'none',
-          }}
-        >
-          Submit
-        </button>
       </form>
+      <Button
+        onClick={handleFetchClubs}
+        style={{ marginTop: '10px', backgroundColor: 'olive', border: 'none' }}
+      >
+        Show Clubs
+      </Button>
+
+      <Container style={{ marginTop: '20px' }}>
+        <Row className="justify-content-center">
+          <Col xs={8}>
+            <h1 className="text-center">Club Names:</h1>
+            <div>
+              {fetchError && <p>{fetchError}</p>}
+              {filteredClubs && (
+                <Row className="g-4">
+                  {filteredClubs.map((club) => (
+                  <Col md={4} key={club.id}>
+                    <Card className="shadow-sm card-light-gray">
+                    <Card.Body>
+                      <Card.Title className="text-center">{club.name}</Card.Title>
+                      <Card.Text className="text-center">
+                      {truncateText(club.description, 150)}
+                      </Card.Text>
+                      <div className="text-center">
+                      <Link href={`/club/${club.id}`} passHref>
+                        <Button variant="primary">View Details</Button>
+                      </Link>
+                      </div>
+                    </Card.Body>
+                    </Card>
+                  </Col>
+                  ))}
+                </Row>
+              )}
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 };
