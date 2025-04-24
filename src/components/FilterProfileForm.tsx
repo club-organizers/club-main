@@ -34,9 +34,9 @@ const FilterProfileForm = ({
     .map((profileInterest) => profileInterest.profileId);
   const filteredProfiles = profiles.filter((profile) => filteredProfileIds.includes(profile.id));
 
-  const { handleSubmit, control } = useForm({});
+  const { handleSubmit, control } = useForm<{ interests: string[] }>();
 
-  const onSubmit = (data: { [x: string]: any }) => {
+  const onSubmit = (data: { interests: string[] }) => {
     setSelectedInterests(data.interests);
   };
 

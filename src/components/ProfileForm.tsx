@@ -8,8 +8,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
 import Multiselect from 'multiselect-react-dropdown';
-import { IProfile, ProfileSchema } from '@/lib/validationSchemas';
 import { Interest, Profile, Project } from '@prisma/client';
+import { IProfile, ProfileSchema } from '@/lib/validationSchemas';
 import { updateProfile } from '@/lib/dbActions';
 
 const ProfileForm = ({

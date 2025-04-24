@@ -1,11 +1,13 @@
-import { prisma } from '@/lib/prisma';
 import { Container, Row } from 'react-bootstrap';
+import { prisma } from '@/lib/prisma';
 import { PageIDs } from '@/utilities/ids';
 import pageStyle from '@/utilities/pageStyle';
 import InterestCardHelper from './InterestCardHelper';
 
+export const dynamic = 'force-dynamic';
+
 type Interest = {
-  id: string;
+  id: number;
   name: string;
 };
 
