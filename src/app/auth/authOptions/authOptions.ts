@@ -62,9 +62,15 @@ const authOptions:NextAuthOptions = {
       },
     }),
     jwt: ({ token, user }) => {
-      // console.log('JWT Callback', { token, user })
       if (user) {
-        const u = user as unknown as any;
+        interface AppUser {
+          id: string;
+          email: string;
+          randomKey: string;
+        }
+    
+        const u = user as AppUser;
+    
         return {
           ...token,
           id: u.id,
