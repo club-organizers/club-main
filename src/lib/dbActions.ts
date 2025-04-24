@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
 import { compare, hash } from 'bcrypt';
@@ -6,7 +5,7 @@ import supabase from '@/../supabaseClient';
 
 export async function getUser(email: string) {
   const { data, error } = await supabase
-    .from('users') // Replace 'users' with your actual table name
+    .from('User') // Replace 'users' with your actual table name
     .select('*')
     .eq('email', email)
     .single();
@@ -33,7 +32,7 @@ export async function changePassword(credentials: { email: string; password: str
   const hashedPassword = await hash(credentials.password, 10);
 
   const { error } = await supabase
-    .from('users') // Replace 'users' with your actual table name
+    .from('User')
     .update({ password: hashedPassword })
     .eq('email', credentials.email);
 
@@ -47,7 +46,7 @@ export async function createUser(credentials: { email: string; password: string 
   const hashedPassword = await hash(credentials.password, 10);
 
   const { error } = await supabase
-    .from('users') // Replace 'users' with your actual table name
+    .from('User')
     .insert({
       email: credentials.email,
       password: hashedPassword,

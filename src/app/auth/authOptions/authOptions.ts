@@ -57,10 +57,6 @@ const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/auth/signin',
     signOut: '/auth/signout',
-    // Uncomment and customize these if needed
-    // error: '/auth/error',
-    // verifyRequest: '/auth/verify-request',
-    // newUser: '/auth/new-user'
   },
   callbacks: {
     session: ({ session, token }) => ({
