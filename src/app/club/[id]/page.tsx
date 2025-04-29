@@ -8,13 +8,13 @@ import supabase from '../../../../supabaseClient';
 const ClubDetailsPage = () => {
   const { id } = useParams();
   const router = useRouter();
-  const [club, setClub] = useState<{ id: string; name: string; description: string; type: string; contact_person: string; email: string } | null>(null);
+  const [club, setClub] = useState<{ name: string; description: string; type: string; contact_person: string; email: string } | null>(null);
 
   useEffect(() => {
     const fetchClubDetails = async () => {
       const { data } = await supabase
         .from('clubs')
-        .select('id, name, description, type, contact_person, email')
+        .select('name, description, type, contact_person, email')
         .eq('id', id)
         .single();
 
@@ -23,6 +23,19 @@ const ClubDetailsPage = () => {
 
     fetchClubDetails();
   }, [id]);
+
+  const handleDelete = async () => {
+    const { error } = await supabase
+      .from('clubs')
+      .delete()
+      .eq('id', id);
+
+    if (!error) {
+      router.back(); // Redirect to the previous page after deletion
+    } else {
+      console.error('Error deleting club:', error);
+    }
+  };
 
   return (
     <Container style={{ marginTop: '20px' }}>
@@ -41,13 +54,11 @@ const ClubDetailsPage = () => {
               <strong>Email:</strong> {club.email}
             </p>
             <div className="text-center">
-              <Button onClick={() => router.push(`/edit/${club.id}`)} variant="secondary" style={{ marginBottom: '10px' }}>
-                Edit
-              </Button>
-            </div>
-            <div className="text-center">
-              <Button onClick={() => router.push(`/projects`)} variant="secondary">
+              <Button onClick={() => router.back()} variant="secondary" className="me-2">
                 Back
+              </Button>
+              <Button onClick={handleDelete} variant="danger">
+                Delete
               </Button>
             </div>
           </Card.Body>
