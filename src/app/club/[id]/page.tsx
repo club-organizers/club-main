@@ -31,7 +31,7 @@ const ClubDetailsPage = () => {
       .eq('id', id);
 
     if (!error) {
-      router.back(); // Redirect to the previous page after deletion
+      router.back();
     } else {
       console.error('Error deleting club:', error);
     }
