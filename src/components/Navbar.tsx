@@ -8,12 +8,11 @@ import { Container, Image, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { BoxArrowRight } from 'react-bootstrap-icons';
 // eslint-disable-next-line import/extensions
 import { ComponentIDs } from '@/utilities/ids';
-import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import supabase from '../../supabaseClient';
 
 const NavBar: React.FC = () => {
-  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [, setFetchError] = useState<string | null>(null);
   const [currentUserRole, setCurrentUserRole] = useState<string | null>(null);
 
   const { data: session } = useSession();
@@ -48,7 +47,7 @@ const NavBar: React.FC = () => {
   }, [currentUser]);
 
   const menuStyle = { marginBottom: '0px' };
-  const navbarClassName = currentUser ? 'bg-dark' : 'bg-light';
+  const navbarClassName = currentUser ? 'bg-light' : 'bg-light';
   //console.log('Current User:', currentUser);
   //console.log('Current User Role:', currentUserRole);
 
