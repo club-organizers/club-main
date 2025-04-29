@@ -18,10 +18,6 @@ const ProfilesPage = () => {
     console.log('Session status:', status); 
     console.log('Session data:', session); 
 
-    if (status === 'loading') {
-      return;
-    }
-
     if (status === 'unauthenticated') {
       console.log('No session found, redirecting to login...');
       router.push('/auth/signin'); 
