@@ -24,6 +24,19 @@ const ClubDetailsPage = () => {
     fetchClubDetails();
   }, [id]);
 
+  const handleDelete = async () => {
+    const { error } = await supabase
+      .from('clubs')
+      .delete()
+      .eq('id', id);
+
+    if (!error) {
+      router.push('/interests'); // Redirect to the clubs page after deletion
+    } else {
+      console.error('Error deleting club:', error);
+    }
+  };
+
   return (
     <Container style={{ marginTop: '20px' }}>
       {club && (
@@ -41,8 +54,11 @@ const ClubDetailsPage = () => {
               <strong>Email:</strong> {club.email}
             </p>
             <div className="text-center">
-              <Button onClick={() => router.back()} variant="secondary">
+              <Button onClick={() => router.back()} variant="secondary" className="me-2">
                 Back
+              </Button>
+              <Button onClick={handleDelete} variant="danger">
+                Delete
               </Button>
             </div>
           </Card.Body>
