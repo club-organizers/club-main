@@ -9,6 +9,7 @@ const ProfilesPage = () => {
   const [selectedClubType, setSelectedClubType] = useState<string>('');
   const [filteredClubs, setFilteredClubs] = useState<{ id: number; name: string; description: string; type: string }[] | null>(null);
   const [fetchError, setFetchError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const clubTypes = [
     'Academic/Professional',
@@ -37,6 +38,7 @@ const ProfilesPage = () => {
       return;
     }
 
+    setLoading(true); // Set loading to true
     const { data, error } = await supabase
       .from('clubs')
       .select('id, name, description, type')
@@ -50,6 +52,7 @@ const ProfilesPage = () => {
       setFilteredClubs(data);
       setFetchError(null);
     }
+    setLoading(false); // Set loading to false
   };
 
   return (
@@ -85,6 +88,7 @@ const ProfilesPage = () => {
           <Col xs={8}>
             <h1 className="text-center">Club Names:</h1>
             <div>
+              {loading && <p>Loading clubs...</p>} {/* Show loading message */}
               {fetchError && <p>{fetchError}</p>}
               {filteredClubs && (
                 <Row className="g-4">
