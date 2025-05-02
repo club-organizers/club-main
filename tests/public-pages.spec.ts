@@ -6,33 +6,25 @@ test.describe('Public pages', () => {
 
     await expect(page.getByRole('link', { name: 'Information' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Register Club' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Recommended Clubs' })).not.toBeVisible(); 
+    await expect(page.getByRole('link', { name: 'Recommended Clubs' })).not.toBeVisible();
     await expect(page.getByRole('link', { name: 'Clubs', exact: true })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Search' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Login/Sign Up' })).toBeVisible();
   });
+});
+
+// Use the logged-in state for authenticated tests
+test.describe('Logged-in pages', () => {
+  test.use({ storageState: 'storage/logged-in.json' });
 
   test('shows correct links for logged-in users', async ({ page }) => {
-    await page.context().addCookies([
-      {
-        name: 'next-auth.session-token',
-        value: 'mock-session-token',
-        domain: 'localhost',
-        path: '/',
-        httpOnly: true,
-        secure: false,
-      },
-    ]);
-
     await page.goto('http://localhost:3000/');
-
-    await page.screenshot({ path: 'logged-in-state.png' });
 
     await expect(page.getByRole('link', { name: 'Information' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Register Club' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Recommended Clubs' })).toBeVisible({ timeout: 50000 }); 
+    await expect(page.getByRole('link', { name: 'Recommended Clubs' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Clubs', exact: true })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Search' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Login/Sign Up' })).not.toBeVisible(); 
+    await expect(page.getByRole('link', { name: 'Login/Sign Up' })).not.toBeVisible();
   });
 });
