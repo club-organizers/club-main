@@ -22,14 +22,20 @@ const NavBar: React.FC = () => {
     const fetchUserRole = async () => {
       if (!currentUser) return;
 
-      const { data } = await supabase
-        .from('User')
-        .select('role')
-        .eq('email', currentUser)
-        .single(); // Fetch a single row
+      try {
+        const { data, error } = await supabase
+          .from('User')
+          .select('role')
+          .eq('email', currentUser)
+          .single(); // Fetch a single row
 
-      if (data) {
-        setCurrentUserRole(data.role); // Set the role from the database
+        if (error) {
+          console.error('Error fetching user role:', error);
+        } else if (data) {
+          setCurrentUserRole(data.role); // Set the role from the database
+        }
+      } catch (err) {
+        console.error('Unexpected error fetching user role:', err);
       }
     };
 
@@ -73,14 +79,17 @@ const NavBar: React.FC = () => {
               Register Club
             </Nav.Link>
             {currentUser && (
-              <Nav.Link
-                id={ComponentIDs.profilesMenuItem}
-                active={pathname === '/profiles'}
-                href="/profiles"
-                key="profiles"
-              >
-                Recommended Clubs
-              </Nav.Link>
+              <>
+                {console.log('Rendering Recommended Clubs link for user:', currentUser)}
+                <Nav.Link
+                  id={ComponentIDs.profilesMenuItem}
+                  active={pathname === '/profiles'}
+                  href="/profiles"
+                  key="profiles"
+                >
+                  Recommended Clubs
+                </Nav.Link>
+              </>
             )}
             <Nav.Link
               id={ComponentIDs.projectsMenuItem}
@@ -101,9 +110,9 @@ const NavBar: React.FC = () => {
 
             {/* Add Club link only accessible to admin */}
             {currentUserRole === 'admin' && (
-                <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
+              <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
                 Add Club
-                </Nav.Link>
+              </Nav.Link>
             )}
           </Nav>
           <Nav className="justify-content-end">
