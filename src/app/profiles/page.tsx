@@ -1,28 +1,14 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { useSession } from 'next-auth/react'; 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import supabase from '../../../supabaseClient';
 
 const ProfilesPage = () => {
-  const router = useRouter();
-  const { data: session, status } = useSession();
   const [selectedClubType, setSelectedClubType] = useState<string>('');
   const [filteredClubs, setFilteredClubs] = useState<{ id: number; name: string; description: string; type: string }[] | null>(null);
   const [fetchError, setFetchError] = useState<string | null>(null);
-
-  useEffect(() => {
-    console.log('Session status:', status); 
-    console.log('Session data:', session); 
-
-    if (status === 'unauthenticated') {
-      console.log('No session found, redirecting to login...');
-      router.push('/auth/signin'); 
-    }
-  }, [router, session, status]);
 
   const clubTypes = [
     'Academic/Professional',
