@@ -2,11 +2,14 @@
 
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import supabase from '../../../supabaseClient';
 import Link from 'next/link';
-
+import supabase from '../../../supabaseClient';
 
 const ProfilesPage = () => {
+  const [selectedClubType, setSelectedClubType] = useState<string>('');
+  const [filteredClubs, setFilteredClubs] = useState<{ id: number; name: string; description: string; type: string }[] | null>(null);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+
   const clubTypes = [
     'Academic/Professional',
     'Sport/Leisure',
@@ -27,10 +30,6 @@ const ProfilesPage = () => {
     return description;
   }
 
-  const [selectedClubType, setSelectedClubType] = useState<string>('');
-  const [filteredClubs, setFilteredClubs] = useState<{ id: number; name: string; description: string; type: string }[] | null>(null);
-  const [fetchError, setFetchError] = useState<string | null>(null);
-
   const handleFetchClubs = async () => {
     if (!selectedClubType) {
       setFetchError('Please select a club type.');
@@ -41,7 +40,7 @@ const ProfilesPage = () => {
     const { data, error } = await supabase
       .from('clubs')
       .select('id, name, description, type')
-      .eq('type', selectedClubType); // Fetch clubs matching the selected type
+      .eq('type', selectedClubType);
 
     if (error) {
       setFetchError('Could not fetch the data');
@@ -90,21 +89,21 @@ const ProfilesPage = () => {
               {filteredClubs && (
                 <Row className="g-4">
                   {filteredClubs.map((club) => (
-                  <Col md={4} key={club.id}>
-                    <Card className="shadow-sm card-light-gray">
-                    <Card.Body>
-                      <Card.Title className="text-center">{club.name}</Card.Title>
-                      <Card.Text className="text-center">
-                      {truncateText(club.description, 150)}
-                      </Card.Text>
-                      <div className="text-center">
-                      <Link href={`/club/${club.id}`} passHref>
-                        <Button variant="primary">View Details</Button>
-                      </Link>
-                      </div>
-                    </Card.Body>
-                    </Card>
-                  </Col>
+                    <Col md={4} key={club.id}>
+                      <Card className="shadow-sm card-light-gray">
+                        <Card.Body>
+                          <Card.Title className="text-center">{club.name}</Card.Title>
+                          <Card.Text className="text-center">
+                            {truncateText(club.description, 150)}
+                          </Card.Text>
+                          <div className="text-center">
+                            <Link href={`/club/${club.id}`} passHref>
+                              <Button variant="primary">View Details</Button>
+                            </Link>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Col>
                   ))}
                 </Row>
               )}
