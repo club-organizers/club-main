@@ -1,7 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
 
-const supabaseUrl = process.env.SUPABASE_URL || '';
-const supabaseKey = process.env.SUPABASE_KEY || '';
+dotenv.config();
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function globalSetup() {
@@ -10,10 +13,14 @@ async function globalSetup() {
   // Insert or update the test user with the ADMIN role
   const { error } = await supabase
     .from('User')
-    .upsert({
-      email: 'testuser@example.com',
-      role: 'ADMIN',
-    }, { onConflict: 'email' }); // Ensure the email is unique
+    .upsert(
+      {
+        email: 'testuser@example.com',
+        password: '123456',
+        role: 'ADMIN',
+      },
+      { onConflict: 'email' } // Ensure the email is unique
+    );
 
   if (error) {
     console.error('Error setting up test user:', error);
