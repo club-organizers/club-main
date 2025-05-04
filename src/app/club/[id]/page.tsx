@@ -90,8 +90,8 @@ const ClubDetailsPage = () => {
               {/* Add Club link only accessible to admin */}
               {currentUserRole === 'ADMIN' && (
                 <Button onClick={handleDelete} variant="danger">
-                Delete
-              </Button>
+                  Delete
+                </Button>
               )}
 
             </div>

@@ -78,7 +78,7 @@ const NavBar: React.FC = () => {
             >
               Register Club
             </Nav.Link>
-            {/* Add Club link only accessible to admin */}
+            
             {currentUserRole === 'ADMIN' && (
               <Nav.Link
                 id={ComponentIDs.profilesMenuItem}
@@ -106,7 +106,6 @@ const NavBar: React.FC = () => {
               Search
             </Nav.Link>
 
-            {/* Add Club link only accessible to admin */}
             {currentUserRole === 'ADMIN' && (
               <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
                 Add Club
