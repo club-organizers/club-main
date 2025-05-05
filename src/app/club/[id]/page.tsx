@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Container, Card, Button } from 'react-bootstrap';
 import supabase from '../../../../supabaseClient';
+import { useSession } from 'next-auth/react';
 
 const ClubDetailsPage = () => {
   const { id } = useParams();
@@ -37,6 +38,34 @@ const ClubDetailsPage = () => {
     }
   };
 
+  const [currentUserRole, setCurrentUserRole] = useState<string | null>(null);
+  const { data: session } = useSession();
+  const currentUser = session?.user?.email;
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      if (!currentUser) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('User')
+          .select('role')
+          .eq('email', currentUser)
+          .single(); // Fetch a single row
+
+        if (error) {
+          console.error('Error fetching user role:', error);
+        } else if (data) {
+          setCurrentUserRole(data.role); // Set the role from the database
+        }
+      } catch (err) {
+        console.error('Unexpected error fetching user role:', err);
+      }
+    };
+
+    fetchUserRole();
+  }, [currentUser]);
+
   return (
     <Container style={{ marginTop: '20px' }}>
       {club && (
@@ -57,9 +86,11 @@ const ClubDetailsPage = () => {
               <Button onClick={() => router.back()} variant="secondary" className="me-2">
                 Back
               </Button>
-              <Button onClick={handleDelete} variant="danger">
+              {currentUserRole === 'ADMIN' && (
+                <Button onClick={handleDelete} variant="danger">
                 Delete
               </Button>
+              )}
             </div>
           </Card.Body>
         </Card>
