@@ -75,7 +75,4 @@ export default defineConfig({
     url: 'http://127.0.0.1:3000',
     reuseExistingServer: true,
   },
-
-  // Other configurations...
-  globalSetup: './tests/global-setup.ts',
 });
