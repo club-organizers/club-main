@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-indent */
-
 'use client';
 
 import { useSession } from 'next-auth/react';
@@ -13,33 +11,35 @@ import supabase from '../../supabaseClient';
 
 const NavBar: React.FC = () => {
   const [currentUserRole, setCurrentUserRole] = useState<string | null>(null);
+  const [currentUserClub, setCurrentUserClub] = useState<string | null>(null);
 
   const { data: session } = useSession();
   const pathname = usePathname();
   const currentUser = session?.user?.email;
 
   useEffect(() => {
-    const fetchUserRole = async () => {
+    const fetchUserDetails = async () => {
       if (!currentUser) return;
 
       try {
         const { data, error } = await supabase
           .from('User')
-          .select('role')
+          .select('role, club') // Fetch both role and club
           .eq('email', currentUser)
           .single(); // Fetch a single row
 
         if (error) {
-          console.error('Error fetching user role:', error);
+          console.error('Error fetching user details:', error);
         } else if (data) {
           setCurrentUserRole(data.role); // Set the role from the database
+          setCurrentUserClub(data.club); // Set the club from the database
         }
       } catch (err) {
-        console.error('Unexpected error fetching user role:', err);
+        console.error('Unexpected error fetching user details:', err);
       }
     };
 
-    fetchUserRole();
+    fetchUserDetails();
   }, [currentUser]);
 
   const menuStyle = { marginBottom: '0px' };
@@ -97,16 +97,25 @@ const NavBar: React.FC = () => {
 
             {/* Add Club link only accessible to admin */}
             {currentUserRole === 'ADMIN' && (
-              <><Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
-                Add Club
-              </Nav.Link><Nav.Link
-                id={ComponentIDs.profilesMenuItem}
-                active={pathname === '/profiles'}
-                href="/profiles"
-                key="profiles"
-              >
+              <>
+                <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
+                  Add Club
+                </Nav.Link>
+                <Nav.Link id={ComponentIDs.profilesMenuItem} active={pathname === '/profiles'} href="/profiles" key="profiles">
                   Recommended Clubs
-                </Nav.Link></>
+                </Nav.Link>
+              </>
+            )}
+            {/* Add Club link only accessible to owner */}
+            {currentUserRole === 'OWNER' && currentUserClub === null && (
+              <>
+                <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
+                  Add Club
+                </Nav.Link>
+                <Nav.Link id={ComponentIDs.profilesMenuItem} active={pathname === '/profiles'} href="/profiles" key="profiles">
+                  Recommended Clubs
+                </Nav.Link>
+              </>
             )}
           </Nav>
           <Nav className="justify-content-end">
