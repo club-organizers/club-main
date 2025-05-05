@@ -12,6 +12,7 @@ import supabase from '../../supabaseClient';
 const NavBar: React.FC = () => {
   const [currentUserRole, setCurrentUserRole] = useState<string | null>(null);
   const [currentUserClub, setCurrentUserClub] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   const { data: session } = useSession();
   const pathname = usePathname();
@@ -19,7 +20,10 @@ const NavBar: React.FC = () => {
 
   useEffect(() => {
     const fetchUserDetails = async () => {
-      if (!currentUser) return;
+      if (!currentUser) {
+        setIsLoading(false); // Stop loading if no user is logged in
+        return;
+      }
 
       try {
         const { data, error } = await supabase
@@ -36,6 +40,8 @@ const NavBar: React.FC = () => {
         }
       } catch (err) {
         console.error('Unexpected error fetching user details:', err);
+      } finally {
+        setIsLoading(false); // Stop loading after fetching is complete
       }
     };
 
@@ -57,64 +63,80 @@ const NavBar: React.FC = () => {
         <Navbar.Toggle aria-controls={ComponentIDs.basicNavbarNav} />
         <Navbar.Collapse id={ComponentIDs.basicNavbarNav}>
           <Nav className="me-auto justify-content-start">
-            {currentUser && (
-              <Nav.Link id={ComponentIDs.homeMenuItem} active={pathname === '/home'} href="/home" key="home">
-                Home
-              </Nav.Link>
-            )}
-            <Nav.Link
-              id={ComponentIDs.information}
-              active={pathname === '/information'}
-              href="/information"
-              key="information"
-            >
-              Information
-            </Nav.Link>
-            <Nav.Link
-              id={ComponentIDs.information}
-              active={pathname === '/register-club'}
-              href="/register-club"
-              key="register-club"
-            >
-              Register Club
-            </Nav.Link>
-            <Nav.Link
-              id={ComponentIDs.projectsMenuItem}
-              active={pathname === '/projects'}
-              href="/projects"
-              key="projects"
-            >
-              Clubs
-            </Nav.Link>
-            <Nav.Link
-              id={ComponentIDs.interestsMenuItem}
-              active={pathname === '/interests'}
-              href="/interests"
-              key="interests"
-            >
-              Search
-            </Nav.Link>
+            {isLoading ? (
+              <Nav.Link disabled>Loading...</Nav.Link> // Show loading indicator
+            ) : (
+              <>
+                {currentUser && (
+                  <Nav.Link id={ComponentIDs.homeMenuItem} active={pathname === '/home'} href="/home" key="home">
+                    Home
+                  </Nav.Link>
+                )}
+                <Nav.Link
+                  id={ComponentIDs.information}
+                  active={pathname === '/information'}
+                  href="/information"
+                  key="information"
+                >
+                  Information
+                </Nav.Link>
+                <Nav.Link
+                  id={ComponentIDs.information}
+                  active={pathname === '/register-club'}
+                  href="/register-club"
+                  key="register-club"
+                >
+                  Register Club
+                </Nav.Link>
+                <Nav.Link
+                  id={ComponentIDs.projectsMenuItem}
+                  active={pathname === '/projects'}
+                  href="/projects"
+                  key="projects"
+                >
+                  Clubs
+                </Nav.Link>
+                <Nav.Link
+                  id={ComponentIDs.interestsMenuItem}
+                  active={pathname === '/interests'}
+                  href="/interests"
+                  key="interests"
+                >
+                  Search
+                </Nav.Link>
 
-            {/* Add Club link only accessible to admin */}
-            {currentUserRole === 'ADMIN' && (
-              <>
-                <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
-                  Add Club
-                </Nav.Link>
-                <Nav.Link id={ComponentIDs.profilesMenuItem} active={pathname === '/profiles'} href="/profiles" key="profiles">
-                  Recommended Clubs
-                </Nav.Link>
-              </>
-            )}
-            {/* Add Club link only accessible to owner */}
-            {currentUserRole === 'OWNER' && currentUserClub === null && (
-              <>
-                <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
-                  Add Club
-                </Nav.Link>
-                <Nav.Link id={ComponentIDs.profilesMenuItem} active={pathname === '/profiles'} href="/profiles" key="profiles">
-                  Recommended Clubs
-                </Nav.Link>
+                {/* Add Club link only accessible to admin */}
+                {currentUserRole === 'ADMIN' && (
+                  <>
+                    <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
+                      Add Club
+                    </Nav.Link>
+                    <Nav.Link
+                      id={ComponentIDs.profilesMenuItem}
+                      active={pathname === '/profiles'}
+                      href="/profiles"
+                      key="profiles"
+                    >
+                      Recommended Clubs
+                    </Nav.Link>
+                  </>
+                )}
+                {/* Add Club link only accessible to owner */}
+                {currentUserRole === 'OWNER' && currentUserClub === null && (
+                  <>
+                    <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
+                      Add Club
+                    </Nav.Link>
+                    <Nav.Link
+                      id={ComponentIDs.profilesMenuItem}
+                      active={pathname === '/profiles'}
+                      href="/profiles"
+                      key="profiles"
+                    >
+                      Recommended Clubs
+                    </Nav.Link>
+                  </>
+                )}
               </>
             )}
           </Nav>
