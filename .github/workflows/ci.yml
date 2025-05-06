@@ -36,8 +36,8 @@ jobs:
       - name: Start server in background
         run: npm run start &
 
-      - name: Wait for server
-        run: npx wait-on http://localhost:3000
+      # - name: Wait for server
+      #   run: npx wait-on http://localhost:3000
 
       - name: Run Playwright tests
         run: npx playwright test
