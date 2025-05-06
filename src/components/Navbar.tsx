@@ -122,20 +122,20 @@ const NavBar: React.FC = () => {
                   </>
                 )}
                 {/* Add Club link only accessible to owner */}
-                {currentUserRole === 'OWNER' && currentUserClub === null && (
-                  <>
-                    <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
-                      Add Club
-                    </Nav.Link>
-                    <Nav.Link
+                {currentUser && (
+                  <Nav.Link
                       id={ComponentIDs.profilesMenuItem}
                       active={pathname === '/profiles'}
                       href="/profiles"
                       key="profiles"
                     >
                       Recommended Clubs
-                    </Nav.Link>
-                  </>
+                  </Nav.Link>
+                )}
+                {currentUserRole === 'OWNER' && currentUserClub === null && (
+                  <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
+                    Add Club
+                  </Nav.Link>
                 )}
               </>
             )}

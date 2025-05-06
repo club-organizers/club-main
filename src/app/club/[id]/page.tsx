@@ -5,17 +5,18 @@ import { useEffect, useState } from 'react';
 import { Container, Card, Button } from 'react-bootstrap';
 import supabase from '../../../../supabaseClient';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 const ClubDetailsPage = () => {
   const { id } = useParams();
   const router = useRouter();
-  const [club, setClub] = useState<{ name: string; description: string; type: string; contact_person: string; email: string } | null>(null);
+  const [club, setClub] = useState<{ id: string; name: string; description: string; type: string; contact_person: string; email: string } | null>(null);
 
   useEffect(() => {
     const fetchClubDetails = async () => {
       const { data } = await supabase
         .from('clubs')
-        .select('name, description, type, contact_person, email')
+        .select('id, name, description, type, contact_person, email')
         .eq('id', id)
         .single();
 
@@ -39,6 +40,7 @@ const ClubDetailsPage = () => {
   };
 
   const [currentUserRole, setCurrentUserRole] = useState<string | null>(null);
+  const [currentUserClub, setCurrentUserClub] = useState<string | null>(null);
   const { data: session } = useSession();
   const currentUser = session?.user?.email;
 
@@ -49,7 +51,7 @@ const ClubDetailsPage = () => {
       try {
         const { data, error } = await supabase
           .from('User')
-          .select('role')
+          .select("role, club") // Fetch both role and club
           .eq('email', currentUser)
           .single(); // Fetch a single row
 
@@ -57,6 +59,7 @@ const ClubDetailsPage = () => {
           console.error('Error fetching user role:', error);
         } else if (data) {
           setCurrentUserRole(data.role); // Set the role from the database
+          setCurrentUserClub(data.club); // Set the club from the database
         }
       } catch (err) {
         console.error('Unexpected error fetching user role:', err);
@@ -86,10 +89,15 @@ const ClubDetailsPage = () => {
               <Button onClick={() => router.back()} variant="secondary" className="me-2">
                 Back
               </Button>
-              {currentUserRole === 'ADMIN' && (
+              {(currentUserRole === 'ADMIN' || (currentUserRole === 'OWNER' && currentUserClub === club.name)) && (
+                <>
                 <Button onClick={handleDelete} variant="danger">
-                Delete
-              </Button>
+                  Delete
+                </Button>
+                <Link href={`/edit/${club.id}`} margin-left="10px">
+                  <Button variant="primary">Edit</Button>
+                </Link>
+                </>
               )}
             </div>
           </Card.Body>
