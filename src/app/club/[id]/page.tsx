@@ -4,17 +4,18 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Container, Card, Button } from 'react-bootstrap';
 import supabase from '../../../../supabaseClient';
+import { useSession } from 'next-auth/react';
 
 const ClubDetailsPage = () => {
   const { id } = useParams();
   const router = useRouter();
-  const [club, setClub] = useState<{ id: string; name: string; description: string; type: string; contact_person: string; email: string } | null>(null);
+  const [club, setClub] = useState<{ name: string; description: string; type: string; contact_person: string; email: string } | null>(null);
 
   useEffect(() => {
     const fetchClubDetails = async () => {
       const { data } = await supabase
         .from('clubs')
-        .select('id, name, description, type, contact_person, email')
+        .select('name, description, type, contact_person, email')
         .eq('id', id)
         .single();
 
@@ -23,6 +24,47 @@ const ClubDetailsPage = () => {
 
     fetchClubDetails();
   }, [id]);
+
+  const handleDelete = async () => {
+    const { error } = await supabase
+      .from('clubs')
+      .delete()
+      .eq('id', id);
+
+    if (!error) {
+      router.back();
+    } else {
+      console.error('Error deleting club:', error);
+    }
+  };
+
+  const [currentUserRole, setCurrentUserRole] = useState<string | null>(null);
+  const { data: session } = useSession();
+  const currentUser = session?.user?.email;
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      if (!currentUser) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('User')
+          .select('role')
+          .eq('email', currentUser)
+          .single(); // Fetch a single row
+
+        if (error) {
+          console.error('Error fetching user role:', error);
+        } else if (data) {
+          setCurrentUserRole(data.role); // Set the role from the database
+        }
+      } catch (err) {
+        console.error('Unexpected error fetching user role:', err);
+      }
+    };
+
+    fetchUserRole();
+  }, [currentUser]);
 
   return (
     <Container style={{ marginTop: '20px' }}>
@@ -41,14 +83,14 @@ const ClubDetailsPage = () => {
               <strong>Email:</strong> {club.email}
             </p>
             <div className="text-center">
-              <Button onClick={() => router.push(`/edit/${club.id}`)} variant="secondary" style={{ marginBottom: '10px' }}>
-                Edit
-              </Button>
-            </div>
-            <div className="text-center">
-              <Button onClick={() => router.push(`/projects`)} variant="secondary">
+              <Button onClick={() => router.back()} variant="secondary" className="me-2">
                 Back
               </Button>
+              {currentUserRole === 'ADMIN' && (
+                <Button onClick={handleDelete} variant="danger">
+                Delete
+              </Button>
+              )}
             </div>
           </Card.Body>
         </Card>
