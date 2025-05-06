@@ -54,7 +54,7 @@ const NavBar: React.FC = () => {
   return (
     <Navbar expand="lg" style={menuStyle} className={navbarClassName}>
       <Container>
-        <Navbar.Brand href="/" className="align-items-center">
+        <Navbar.Brand href="/LandPage" className="align-items-center">
           <span style={{ fontWeight: 800, fontSize: '24px' }}>
             <Image src="/images/logo.png" width={50} style={{ marginBottom: 3 }} alt="Bowfolios" />
             Club Organizers
@@ -68,7 +68,7 @@ const NavBar: React.FC = () => {
             ) : (
               <>
                 {currentUser && (
-                  <Nav.Link id={ComponentIDs.homeMenuItem} active={pathname === '/home'} href="/home" key="home">
+                  <Nav.Link id={ComponentIDs.homeMenuItem} active={pathname === '/LandPage'} href="/LandPage" key="home">
                     Home
                   </Nav.Link>
                 )}
