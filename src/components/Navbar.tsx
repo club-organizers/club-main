@@ -107,19 +107,14 @@ const NavBar: React.FC = () => {
 
                 {/* Add Club link only accessible to admin */}
                 {currentUserRole === 'ADMIN' && (
-                  <>
-                    <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
-                      Add Club
-                    </Nav.Link>
-                    <Nav.Link
-                      id={ComponentIDs.profilesMenuItem}
-                      active={pathname === '/profiles'}
-                      href="/profiles"
-                      key="profiles"
-                    >
-                      Recommended Clubs
-                    </Nav.Link>
-                  </>
+                  <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
+                    Add Club
+                  </Nav.Link>
+                )}
+                {currentUserRole === 'OWNER' && currentUserClub === null && (
+                  <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
+                    Add Club
+                  </Nav.Link>
                 )}
                 {/* Add Club link only accessible to owner */}
                 {currentUser && (
@@ -130,11 +125,6 @@ const NavBar: React.FC = () => {
                       key="profiles"
                     >
                       Recommended Clubs
-                  </Nav.Link>
-                )}
-                {currentUserRole === 'OWNER' && currentUserClub === null && (
-                  <Nav.Link id={ComponentIDs.addProjectMenuItem} active={pathname === '/add'} href="/add" key="add">
-                    Add Club
                   </Nav.Link>
                 )}
               </>

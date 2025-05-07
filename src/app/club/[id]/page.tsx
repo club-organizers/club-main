@@ -31,8 +31,25 @@ const ClubDetailsPage = () => {
       .from('clubs')
       .delete()
       .eq('id', id);
-
+  
     if (!error) {
+      // Set the user's club value to null in the User table
+      try {
+        const { error: updateError } = await supabase
+          .from('User')
+          .update({ club: null }) // Set the club column to null
+          .eq('email', currentUser); // Match the current user's email
+  
+        if (updateError) {
+          console.error('Error updating user club to null:', updateError);
+        } else {
+          console.log('User club value set to null successfully.');
+          setCurrentUserClub(null); // Update the local state
+        }
+      } catch (err) {
+        console.error('Unexpected error updating user club to null:', err);
+      }
+  
       router.back();
     } else {
       console.error('Error deleting club:', error);

@@ -4,10 +4,14 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import supabase from '../../../../supabaseClient';
+import { useSession } from 'next-auth/react';
 
 const EditClubPage = () => {
   const { id } = useParams();
   const router = useRouter();
+  const { data: session } = useSession(); // Retrieve session data here
+  const currentUserEmail = session?.user?.email; // Extract the current user's email
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -38,8 +42,7 @@ const EditClubPage = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    console.log(`Input Changed: ${name} = ${value}`); // Log the name and value of the input field
-    setFormData((prev) => ({ ...prev, [name]: value })); // Update the corresponding field in `formData`
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,12 +59,33 @@ const EditClubPage = () => {
       .update(formData)
       .eq('id', id);
 
-    if (error) {
-      console.error('Error updating club:', error);
-      setFormError('Failed to update the club. Please try again.');
-    } else {
+    if (!error) {
+      try {
+        if (!currentUserEmail) {
+          setFormError('Failed to identify the current user.');
+          return;
+        }
+
+        // Update the "club" column in the "User" table to the new club name
+        const { error: updateError } = await supabase
+          .from('User')
+          .update({ club: formData.name }) // Set the club column to the updated club name
+          .eq('email', currentUserEmail); // Match the current user's email
+
+        if (updateError) {
+          console.error('Error updating user club to the new name:', updateError);
+        } else {
+          console.log('User club value updated to the new name successfully.');
+        }
+      } catch (err) {
+        console.error('Unexpected error updating user club to the new name:', err);
+      }
+
       alert('Club updated successfully!');
       router.push(`/club/${id}`); // Redirect to the club details page after successful update
+    } else {
+      console.error('Error updating club:', error);
+      setFormError('Failed to update the club. Please try again.');
     }
   };
 
