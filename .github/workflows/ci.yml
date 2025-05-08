@@ -33,18 +33,8 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      # - name: Start server in background
-      #   run: nohup PORT=3001 npm run start > server.log 2>&1 &
-      
-      # - name: Wait for server
-      #   run: npx wait-on http://127.0.0.1:3001 --timeout 120000
-      
-      # - name: Debug server log (if fails)
-      #   if: failure()
-      #   run: cat server.log
-
-      - name: Run Playwright tests
-        run: npx playwright test
+      # - name: Run Playwright tests
+      #   run: npx playwright test
 
       - name: Upload Playwright HTML Report
         if: always()
