@@ -5,7 +5,7 @@ import supabase from '@/../supabaseClient';
 
 export async function getUser(email: string) {
   const { data, error } = await supabase
-    .from('User') // Replace 'users' with your actual table name
+    .from('User') 
     .select('*')
     .eq('email', email)
     .single();
