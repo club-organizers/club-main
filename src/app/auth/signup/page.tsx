@@ -4,18 +4,20 @@ import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
+import { Card, Col, Container, Button, Form, Row, Alert } from 'react-bootstrap';
 import { createUser } from '@/lib/dbActions';
+import { useState } from 'react';
 
 type SignUpForm = {
   email: string;
   password: string;
   confirmPassword: string;
-  // acceptTerms: boolean;
 };
 
 /** The sign up page. */
 const SignUp = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const validationSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email is invalid'),
     password: Yup.string()
@@ -24,7 +26,7 @@ const SignUp = () => {
       .max(40, 'Password must not exceed 40 characters'),
     confirmPassword: Yup.string()
       .required('Confirm Password is required')
-      .oneOf([Yup.ref('password'), ''], 'Confirm Password does not match'),
+      .oneOf([Yup.ref('password'), ''], 'Passwords do not match'),
   });
 
   const {
@@ -37,10 +39,27 @@ const SignUp = () => {
   });
 
   const onSubmit = async (data: SignUpForm) => {
-    // console.log(JSON.stringify(data, null, 2));
-    await createUser(data);
-    // After creating, signIn with redirect to the add page
-    await signIn('credentials', { callbackUrl: '/LandPage', ...data });
+    setErrorMessage(null); // Clear any previous error messages
+
+    try {
+      // Attempt to create the user
+      await createUser(data);
+
+      // After creating, sign in with redirect to the landing page
+      await signIn('credentials', { callbackUrl: '/LandPage', ...data });
+    } catch (error) {
+      if (error instanceof Error) {
+        // Handle specific errors
+        if (error.message.includes('duplicate key value')) {
+          setErrorMessage('The email is already taken. Please use a different email.');
+        } else {
+          setErrorMessage('An unexpected error occurred. Please try again.');
+        }
+      } else {
+        // Handle non-Error objects (fallback)
+        setErrorMessage('An unexpected error occurred. Please try again.');
+      }
+    }
   };
 
   return (
@@ -52,6 +71,11 @@ const SignUp = () => {
               <h1 className="text-center" style={{ color: 'white' }}>Sign Up</h1>
               <Card>
                 <Card.Body>
+                  {errorMessage && (
+                    <Alert variant="danger" className="text-center">
+                      {errorMessage}
+                    </Alert>
+                  )}
                   <Form onSubmit={handleSubmit(onSubmit)}>
                     <Form.Group className="form-group">
                       <Form.Label>Email</Form.Label>

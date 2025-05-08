@@ -53,8 +53,9 @@ export async function createUser(credentials: { email: string; password: string 
     });
 
   if (error) {
-    console.error('Error creating user:', error.message);
-    throw new Error('Failed to create user');
+    if (error.message.includes('duplicate key value')) {
+      throw new Error('duplicate key value'); 
+    }
+    throw new Error(error.message); 
   }
 }
-
