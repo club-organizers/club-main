@@ -1,10 +1,15 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
-import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button, Card, Col, Container, Form, Row, Alert } from 'react-bootstrap';
 
 /** The sign in page. */
 const SignIn = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
@@ -13,14 +18,20 @@ const SignIn = () => {
     };
     const email = target.email.value;
     const password = target.password.value;
+
     const result = await signIn('credentials', {
       callbackUrl: '/LandPage',
       email,
       password,
+      redirect: false, 
     });
 
     if (result?.error) {
+      setErrorMessage('Invalid email or password. Please try again.');
       console.error('Sign in failed: ', result.error);
+    } else {
+      setErrorMessage(null); 
+      router.push('/LandPage'); 
     }
   };
 
@@ -33,6 +44,11 @@ const SignIn = () => {
               <h1 className="text-center" style={{ color: 'white' }}>Log In</h1>
               <Card>
                 <Card.Body>
+                  {errorMessage && (
+                    <Alert variant="danger" className="text-center">
+                      {errorMessage}
+                    </Alert>
+                  )}
                   <Form method="post" onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicEmail">
                       <Form.Label>Email</Form.Label>
@@ -49,7 +65,7 @@ const SignIn = () => {
                 </Card.Body>
                 <Card.Footer>
                   Don&apos;t have an account?
-                  <a href="/auth/signup">Sign up</a>
+                  <a href="/auth/signup"> Sign up</a>
                   <Button href="/auth/loginPage" variant="primary" className="float-end">
                     Back
                   </Button>

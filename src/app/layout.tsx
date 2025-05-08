@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={classString}>
         <Providers>
           <NavBar />
-          {children}
+          <main>{children}</main>
           <Footer />
         </Providers>
       </body>

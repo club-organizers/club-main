@@ -72,7 +72,7 @@ const Add = () => {
   
     try {
       // If the user is an OWNER, update their "club" column in the User table
-      if (currentUserRole === "OWNER" && currentUserClub === null) {
+      if ((currentUserRole === "OWNER" && currentUserClub === null) || currentUserRole === "ADMIN") {
         try {
           const { error: updateError } = await supabase
             .from("User")
@@ -89,7 +89,7 @@ const Add = () => {
           console.error("Unexpected error updating club for OWNER:", err);
         }
       } else {
-        setFormError("A club's already registered to this user.");
+        setFormError("Account doesn't have club registration permission.");
         setIsSubmitting(false); // Reset the submitting state
         return; // Exit the function early to prevent further execution
       }
